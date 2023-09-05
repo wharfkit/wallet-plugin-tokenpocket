@@ -24,7 +24,7 @@ import ScatterEOS from '@scatterjs/eosjs2'
 import {ScatterAccount} from './types'
 
 export class WalletPluginTokenPocket extends AbstractWalletPlugin implements WalletPlugin {
-    id = 'scatter'
+    id = 'tokenpocket'
 
     translations = {}
 
