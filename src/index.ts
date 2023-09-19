@@ -18,10 +18,7 @@ import {
 } from '@wharfkit/session'
 
 import {Api, JsonRpc} from 'eosjs'
-import ScatterJS from '@scatterjs/core'
-import ScatterEOS from '@scatterjs/eosjs2'
-
-import {ScatterAccount} from './types'
+import {ScatterJS, ScatterEOS, ScatterAccount, ScatterIdentity} from 'scatter-ts'
 
 export class WalletPluginTokenPocket extends AbstractWalletPlugin implements WalletPlugin {
     id = 'tokenpocket'
@@ -103,24 +100,25 @@ export class WalletPluginTokenPocket extends AbstractWalletPlugin implements Wal
     }
 
     async getScatter(context): Promise<{account: ScatterAccount; connector: any}> {
-        // Ensure connected
-        const connected: boolean = await ScatterJS.connect(context.appName)
-        if (!connected) {
-            throw new Error('Unable to connect with TokenPocket wallet')
-        }
-
         // Setup network
         const url = new URL(context.chain.url)
+        const protocol = url.protocol.replace(':', '') === 'https' ? 'https' : 'http'
         const network = ScatterJS.Network.fromJson({
             blockchain: context.chain.name,
             chainId: String(context.chain.id),
             host: url.hostname,
-            port: url.port,
-            protocol: url.protocol.replace(':', ''),
+            port: url.port ? Number(url.port) : protocol === 'https' ? 443 : 80,
+            protocol,
         })
 
+        // Ensure connected
+        const connected: boolean = await ScatterJS.connect(context.appName, {network})
+        if (!connected) {
+            throw new Error('Unable to connect with TokenPocket wallet')
+        }
+
         // Ensure connection and get identity
-        const scatterIdentity = await ScatterJS.login({accounts: [network]})
+        const scatterIdentity: ScatterIdentity = await ScatterJS.login()
         if (!scatterIdentity || !scatterIdentity.accounts) {
             throw new Error('Unable to retrieve account from TokenPocket')
         }
