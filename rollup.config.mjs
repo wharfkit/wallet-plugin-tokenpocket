@@ -30,7 +30,7 @@ export default [
         input: 'src/index.ts',
         output: {
             banner,
-            file: pkg.main,
+            dir: pkg.main.split('/').slice(0, -1).join('/'),
             format: 'cjs',
             sourcemap: true,
             exports: 'named',
@@ -50,7 +50,7 @@ export default [
         input: 'src/index.ts',
         output: {
             banner,
-            file: pkg.module,
+            dir: pkg.module.split('/').slice(0, -1).join('/'),
             format: 'esm',
             sourcemap: true,
         },
@@ -67,7 +67,7 @@ export default [
     },
     {
         input: 'src/index.ts',
-        output: {banner, file: pkg.types, format: 'esm'},
+        output: {banner, dir: pkg.types.split('/').slice(0, -1).join('/'), format: 'esm'},
         plugins: [dts()],
     },
 ]
