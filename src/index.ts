@@ -6,11 +6,8 @@ import {
     TransactContext,
     WalletPlugin,
     WalletPluginConfig,
-    WalletPluginLoginResponse,
     WalletPluginMetadata,
-    WalletPluginSignResponse,
 } from '@wharfkit/session'
-import {handleLogin, handleLogout, handleSignatureRequest} from '@wharfkit/protocol-scatter'
 
 export class WalletPluginTokenPocket extends AbstractWalletPlugin implements WalletPlugin {
     id = 'tokenpocket'
@@ -32,6 +29,19 @@ export class WalletPluginTokenPocket extends AbstractWalletPlugin implements Wal
         super()
     }
 
+    private async loadScatterProtocol() {
+        let protocolScatter
+        if (typeof window !== 'undefined') {
+            protocolScatter = await import('@wharfkit/protocol-scatter')
+        }
+
+        if (!protocolScatter) {
+            throw new Error('Scatter protocol is not available in this environment')
+        }
+
+        return protocolScatter
+    }
+
     /**
      * The metadata for the wallet plugin to be displayed in the user interface.
      */
@@ -51,16 +61,9 @@ export class WalletPluginTokenPocket extends AbstractWalletPlugin implements Wal
      * @param context LogoutContext
      * @returns Promise<WalletPluginLoginResponse>
      */
-    login(context: LoginContext): Promise<WalletPluginLoginResponse> {
-        return new Promise((resolve, reject) => {
-            handleLogin(context)
-                .then((response) => {
-                    resolve(response)
-                })
-                .catch((error) => {
-                    reject(error)
-                })
-        })
+    async login(context: LoginContext) {
+        const protocolScatter = await this.loadScatterProtocol()
+        return protocolScatter.handleLogin(context)
     }
 
     /**
@@ -70,16 +73,9 @@ export class WalletPluginTokenPocket extends AbstractWalletPlugin implements Wal
      * @returns Promise<void>
      */
 
-    logout(context: LogoutContext): Promise<void> {
-        return new Promise((resolve, reject) => {
-            handleLogout(context)
-                .then(() => {
-                    resolve()
-                })
-                .catch((error) => {
-                    reject(error)
-                })
-        })
+    async logout(context: LogoutContext): Promise<void> {
+        const protocolScatter = await this.loadScatterProtocol()
+        return protocolScatter.handleLogout(context)
     }
 
     /**
@@ -89,10 +85,9 @@ export class WalletPluginTokenPocket extends AbstractWalletPlugin implements Wal
      * @param resolved ResolvedSigningRequest
      * @returns Promise<Signature>
      */
-    sign(
-        resolved: ResolvedSigningRequest,
-        context: TransactContext
-    ): Promise<WalletPluginSignResponse> {
-        return handleSignatureRequest(resolved, context)
+    async sign(resolved: ResolvedSigningRequest, context: TransactContext) {
+        const protocolScatter = await this.loadScatterProtocol()
+
+        return protocolScatter.handleSignatureRequest(resolved, context)
     }
 }
