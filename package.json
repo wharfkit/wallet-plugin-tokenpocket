@@ -1,7 +1,7 @@
 {
     "name": "@wharfkit/wallet-plugin-tokenpocket",
     "description": "A WalletPlugin for the TokenPocket wallet for use within the @wharfkit/session.",
-    "version": "1.6.1",
+    "version": "1.6.2",
     "homepage": "https://github.com/wharfkit/wallet-plugin-tokenpocket",
     "license": "BSD-3-Clause",
     "main": "lib/cjs/index.js",
@@ -16,7 +16,7 @@
         "prepare": "make"
     },
     "dependencies": {
-        "@wharfkit/protocol-scatter": "^1.4.1",
+        "@wharfkit/protocol-scatter": "^1.4.2",
         "tslib": "^2.1.0"
     },
     "peerDependencies": {
