@@ -625,10 +625,10 @@
     "@wharfkit/signing-request" "^3.1.0"
     tslib "^2.1.0"
 
-"@wharfkit/protocol-scatter@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@wharfkit/protocol-scatter/-/protocol-scatter-1.4.0.tgz#31ed2c83fdcf43a84d4604a0957cb3789d6a8159"
-  integrity sha512-lwchoQxBFddMGsanMyiSNmE4x6oNJKOdX618R969cKvxkbDLpymAJoA2A7FMoWzZ2dmAN3FAa3b1ac+I+bPhTQ==
+"@wharfkit/protocol-scatter@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@wharfkit/protocol-scatter/-/protocol-scatter-1.4.1.tgz#6cecdf3c6b64ce9a67326cc79ee87a2a3337fbd6"
+  integrity sha512-MvWOopk/5PupUTHCTsPy5lJKYAlp70aUUJY+/s2b2gqsZwTqJIvDiMqqKbPMsCZO/16jihkHukYXBBgmYdrMQQ==
   dependencies:
     eosjs "20.0.0"
     scatter-ts "^0.1.9"
