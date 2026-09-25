@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This package lives in the WharfKit monorepo at [wharfkit/js/packages/wallet-plugin-tokenpocket](https://github.com/wharfkit/js/tree/dev/packages/wallet-plugin-tokenpocket), and this repository is archived. Open new issues and pull requests on [wharfkit/js](https://github.com/wharfkit/js).
+
 # @wharfkit/wallet-plugin-tokenpocket
 
 A Session Kit wallet plugin for the [TokenPocket](https://www.tokenpocket.pro/) wallet.
